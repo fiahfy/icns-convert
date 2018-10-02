@@ -7,7 +7,16 @@ import icnsConvert from '.'
 const main = async () => {
   program
     .version(pkg.version)
+    .description(pkg.description)
     .usage('[options] <source> <target>')
+    .on('--help', () => {
+      console.log(`
+Examples:
+
+  $ icns-convert input.png output.icns
+  $ icns-convert inputs/ output.icns
+`)
+    })
     .parse(process.argv)
 
   const [source, target] = program.args
@@ -30,5 +39,5 @@ const main = async () => {
 }
 
 main().catch((e) => {
-  console.error(e.message)
+  console.error(e)
 })
