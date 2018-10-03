@@ -27,7 +27,7 @@ const bufs = [
   fs.readFileSync('128x128.png'),
   fs.readFileSync('256x256.png'),
   fs.readFileSync('512x512.png'),
-  fs.readFileSync('1024x1024.png'),
+  fs.readFileSync('1024x1024.png')
 ]
 icnsConvert(bufs).then((data) => {
   fs.writeFileSync('output.icns', data)
