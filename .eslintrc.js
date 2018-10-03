@@ -1,14 +1,18 @@
-// http://eslint.org/docs/user-guide/configuring
-
 module.exports = {
   root: true,
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: 'module'
+  },
   env: {
-    "jest": true
+    node: true,
+    jest: true
   },
   extends: [
-    // https://github.com/standard/standard/blob/master/docs/RULES-en.md
-    'standard'
+    'eslint:recommended',
+    'plugin:prettier/recommended'
   ],
-  // add your custom rules here
-  rules: {}
+  rules: {
+    'no-console': 'off'
+  }
 }

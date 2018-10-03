@@ -52,7 +52,9 @@ const icnsConvertFromBuffers = async (buffers) => {
     throw new TypeError('No valid images')
   }
 
-  const missingSizes = Icns.supportedSizes.filter((size) => !sizes.includes(size))
+  const missingSizes = Icns.supportedSizes.filter(
+    (size) => !sizes.includes(size)
+  )
   if (missingSizes.length) {
     const pixels = missingSizes.map((size) => `${size}x${size}`).join(', ')
     console.warn(`Warning: Missing pixels (${pixels})`)

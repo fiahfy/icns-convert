@@ -4,21 +4,14 @@ import { encode } from '@fiahfy/packbits'
 const iconHeaderSize = 8
 
 class IconHeader {
-  constructor ({
-    identifier = 'icns',
-    bytes = 0
-  } = {}) {
+  constructor({ identifier = 'icns', bytes = 0 } = {}) {
     this.identifier = identifier
     this.bytes = bytes
   }
 }
 
 class IconImage {
-  constructor ({
-    osType = '',
-    bytes = 0,
-    data = null
-  } = {}) {
+  constructor({ osType = '', bytes = 0, data = null } = {}) {
     this.osType = osType
     this.bytes = bytes
     this.data = data
@@ -26,14 +19,14 @@ class IconImage {
 }
 
 export default class Icns {
-  constructor (buffer) {
+  constructor(buffer) {
     this.iconHeader = new IconHeader()
     this.iconImages = []
     if (buffer) {
       this.data = buffer
     }
   }
-  static get supportedTypes () {
+  static get supportedTypes() {
     return [
       { osType: 'ic04', size: 16, format: 'ARGB' },
       { osType: 'ic05', size: 32, format: 'ARGB' },
@@ -47,24 +40,25 @@ export default class Icns {
       { osType: 'ic14', size: 512, format: 'PNG' }
     ]
   }
-  static get supportedSizes () {
-    return Icns.supportedTypes.map((type) => type.size)
+  static get supportedSizes() {
+    return Icns.supportedTypes
+      .map((type) => type.size)
       .filter((x, i, self) => self.indexOf(x) === i)
-      .sort((a, b) => a > b ? 1 : -1)
+      .sort((a, b) => (a > b ? 1 : -1))
   }
-  get _iconHeaderData () {
+  get _iconHeaderData() {
     const buf = Buffer.alloc(iconHeaderSize)
     buf.write(this.iconHeader.identifier, 0, 4, 'ascii')
     buf.writeUInt32BE(this.iconHeader.bytes, 4)
     return buf
   }
-  set _iconHeaderData (buffer) {
+  set _iconHeaderData(buffer) {
     const iconHeader = new IconHeader()
     iconHeader.identifier = buffer.toString('ascii', 0, 4)
     iconHeader.bytes = buffer.readUInt32BE(4)
     this.iconHeader = iconHeader
   }
-  get _iconImagesData () {
+  get _iconImagesData() {
     return this.iconImages.map((image) => {
       const buf = Buffer.alloc(8)
       buf.write(image.osType, 0, 4, 'ascii')
@@ -76,7 +70,7 @@ export default class Icns {
       return Buffer.concat(list, totalLength)
     })
   }
-  set _iconImagesData (buffer) {
+  set _iconImagesData(buffer) {
     const iconImages = []
     let pos = iconHeaderSize
     while (pos < this.iconHeader.bytes) {
@@ -89,19 +83,21 @@ export default class Icns {
     }
     this.iconImages = iconImages
   }
-  get data () {
+  get data() {
     const list = [this._iconHeaderData, ...this._iconImagesData]
     const totalLength = list.reduce((carry, buf) => carry + buf.length, 0)
     return Buffer.concat(list, totalLength)
   }
-  set data (buffer) {
+  set data(buffer) {
     this._iconHeaderData = buffer
     this._iconImagesData = buffer
   }
-  _resetIconHeader () {
-    this.iconHeader.bytes = iconHeaderSize + this.iconImages.reduce((carry, image) => carry + image.bytes, 0)
+  _resetIconHeader() {
+    this.iconHeader.bytes =
+      iconHeaderSize +
+      this.iconImages.reduce((carry, image) => carry + image.bytes, 0)
   }
-  _createARGBData (bitmap) {
+  _createARGBData(bitmap) {
     const a = []
     const r = []
     const g = []
@@ -127,24 +123,25 @@ export default class Icns {
     header.write('ARGB', 0, 4, 'ascii')
     return Buffer.concat([header, data], 4 + data.length)
   }
-  async appendImage (buffer, osType) {
+  async appendImage(buffer, osType) {
     await this.insertImage(buffer, osType, this.iconImages.length)
   }
-  async insertImage (buffer, osType, index) {
+  async insertImage(buffer, osType, index) {
     const image = await Jimp.read(buffer)
     if (image.getMIME() !== Jimp.MIME_PNG) {
       throw new TypeError('Image must be png format')
     }
 
     const type = Icns.supportedTypes.find((type) => type.osType === osType)
-    const data = type.format === 'PNG' ? buffer : this._createARGBData(image.bitmap)
+    const data =
+      type.format === 'PNG' ? buffer : this._createARGBData(image.bitmap)
     const bytes = data.length + 8
     const iconImage = new IconImage({ osType, bytes, data })
     this.iconImages[index] = iconImage
 
     this._resetIconHeader()
   }
-  removeImage (index) {
+  removeImage(index) {
     this.iconImages.splice(index, 1)
 
     this._resetIconHeader()
