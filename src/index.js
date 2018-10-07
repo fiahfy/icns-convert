@@ -1,5 +1,5 @@
+import Icns from '@fiahfy/icns'
 import Jimp from 'jimp'
-import Icns from './icns'
 
 const icnsConvertFromBuffer = async (buffer) => {
   const image = await Jimp.read(buffer)
