@@ -36,5 +36,5 @@ icnsConvert(bufs).then((data) => {
 
 ## CLI
 ```
-icns-convert input.png output.icns
+icns-convert icon.png
 ```

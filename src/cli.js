@@ -8,21 +8,27 @@ const main = async () => {
   program
     .version(pkg.version)
     .description(pkg.description)
-    .usage('[options] <source> <target>')
+    .usage('[options] source [target]')
     .on('--help', () => {
       console.log(`
 Examples:
 
-  $ icns-convert input.png output.icns
-  $ icns-convert inputs/ output.icns
+  $ icns-convert icon.png
+  $ icns-convert icons/
 `)
     })
     .parse(process.argv)
 
-  const [source, target] = program.args
+  let [source, target] = program.args
 
-  if (!source || !target) {
+  if (!source) {
     program.help()
+  }
+  if (!target) {
+    const parsed = path.parse(source)
+    delete parsed.base
+    parsed.ext = '.icns'
+    target = path.format(parsed)
   }
 
   const stat = fs.statSync(source)
