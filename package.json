@@ -14,7 +14,7 @@
     "url": "https://github.com/fiahfy/icns-convert/issues"
   },
   "dependencies": {
-    "@fiahfy/icns": "^0.0.1",
+    "@fiahfy/icns": "^0.0.2",
     "commander": "^2.18.0",
     "jimp": "^0.5.0"
   },

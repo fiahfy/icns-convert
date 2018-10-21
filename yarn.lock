@@ -591,10 +591,10 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@fiahfy/icns@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@fiahfy/icns/-/icns-0.0.1.tgz#a0e856807669c0815e7e77a8b43c86031555b1d5"
-  integrity sha512-4kMXTGlej/wYwC0/EXU3uGZFuitjHhi0Wv0v+tT0fq4JAdP0seBaJuDda22LKhV0UoLRc4r9C7aZZ/sNrZaIFQ==
+"@fiahfy/icns@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@fiahfy/icns/-/icns-0.0.2.tgz#3ee045637611bcda3cbebb527c16a14783bbf3ea"
+  integrity sha512-xAoGUFnsjDeE+vOJ0EJCosOjv1bzZl0m/DWzoJvvx3ycxdxGuCeprgQZKZrCmdrs4keuYnJXtBubJUAiDYbp8g==
   dependencies:
     "@fiahfy/packbits" "^0.0.2"
     jimp "^0.5.0"

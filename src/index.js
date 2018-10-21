@@ -7,7 +7,7 @@ const icnsConvertFromBuffer = async (buffer) => {
     throw new TypeError('Image must be png format')
   }
   if (image.getWidth() !== image.getHeight()) {
-    console.warn('Warning: Image should be squre')
+    throw new TypeError('Image should be squre')
   }
   if (image.getWidth() < 1024 || image.getHeight() < 1024) {
     console.warn('Warning: Image should be 1024x1024 pixels or more')
@@ -69,6 +69,6 @@ export default async (buffer) => {
   } else if (Array.isArray(buffer)) {
     return icnsConvertFromBuffers(buffer)
   } else {
-    throw new TypeError('Image must be Buffer or Array')
+    throw new TypeError('Image must be Buffer or Buffer Array')
   }
 }
