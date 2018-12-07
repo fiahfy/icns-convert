@@ -1,7 +1,7 @@
 {
   "name": "@fiahfy/icns-convert",
   "description": "Convert PNG to Apple Icon Image format",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": {
     "name": "fiahfy",
     "email": "d.fiahfy@gmail.com",
