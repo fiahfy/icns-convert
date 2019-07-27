@@ -2,17 +2,19 @@
 
 > Convert PNG to [Apple Icon Image format](https://en.wikipedia.org/wiki/Apple_Icon_Image_format).
 
+
 ## Installation
 ```
 npm install @fiahfy/icns-convert
 ```
+
 
 ## Usage
 ```js
 import fs from 'fs'
 import icnsConvert from '@fiahfy/icns-convert'
 
-const buf = fs.readFileSync('input.png') // squre, 1024x1024 pixels or more
+const buf = fs.readFileSync('input.png') // image must be squre, 1024x1024 pixels or larger
 icnsConvert(buf).then((data) => {
   fs.writeFileSync('output.icns', data)
 })
@@ -33,6 +35,7 @@ icnsConvert(bufs).then((data) => {
   fs.writeFileSync('output.icns', data)
 })
 ```
+
 
 ## CLI
 ```
