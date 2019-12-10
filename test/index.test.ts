@@ -18,7 +18,7 @@ describe('icns convert', () => {
   })
 
   test('should throw error', () => {
-    const src = './test/sample.png'
+    const src = './test/sample.png' as any // eslint-disable-line @typescript-eslint/no-explicit-any
     expect(icnsConvert(src)).rejects.toThrowError(TypeError)
   })
 })

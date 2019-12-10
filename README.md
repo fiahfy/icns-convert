@@ -1,15 +1,17 @@
-# @fiahfy/icns-convert
+# icns-convert
+
+![badge](https://github.com/fiahfy/icns-convert/workflows/Node.js%20Package/badge.svg)
 
 > Convert PNG to [Apple Icon Image format](https://en.wikipedia.org/wiki/Apple_Icon_Image_format).
 
-
 ## Installation
-```
+
+```bash
 npm install @fiahfy/icns-convert
 ```
 
-
 ## Usage
+
 ```js
 import fs from 'fs'
 import icnsConvert from '@fiahfy/icns-convert'
@@ -21,6 +23,7 @@ icnsConvert(buf).then((data) => {
 ```
 
 ### Specify images by size
+
 ```js
 const bufs = [
   fs.readFileSync('16x16.png'),
@@ -36,8 +39,15 @@ icnsConvert(bufs).then((data) => {
 })
 ```
 
-
 ## CLI
-```
+
+```bash
+npm install -g @fiahfy/icns-convert
 icns-convert icon.png
+```
+
+### npx
+
+```bash
+npx @fiahfy/icns-convert icon.png
 ```

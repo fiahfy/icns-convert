@@ -4,7 +4,7 @@ import program from 'commander'
 import pkg from '../package.json'
 import icnsConvert from '.'
 
-const main = async () => {
+const main = async (): Promise<void> => {
   program
     .version(pkg.version)
     .description(pkg.description)
@@ -19,7 +19,8 @@ Examples:
     })
     .parse(process.argv)
 
-  let [source, target] = program.args
+  const source = program.args[0]
+  let target = program.args[1]
 
   if (!source) {
     program.help()
