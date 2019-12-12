@@ -2,7 +2,7 @@
 
 ![badge](https://github.com/fiahfy/icns-convert/workflows/Node.js%20Package/badge.svg)
 
-> Convert PNG to [Apple Icon Image format](https://en.wikipedia.org/wiki/Apple_Icon_Image_format).
+> Convert Image to [Apple Icon Image format](https://en.wikipedia.org/wiki/Apple_Icon_Image_format).
 
 ## Installation
 
