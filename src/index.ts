@@ -1,7 +1,7 @@
 import sharp from 'sharp'
 import { Icns, IcnsImage } from '@fiahfy/icns'
 
-const icnsConvertFromBuffer = async (buffer: Buffer): Promise<Buffer> => {
+const convertFromBuffer = async (buffer: Buffer): Promise<Buffer> => {
   const image = sharp(buffer)
   const { width, height } = await image.metadata()
   if (!width || !height || width !== height) {
@@ -21,7 +21,7 @@ const icnsConvertFromBuffer = async (buffer: Buffer): Promise<Buffer> => {
   return icns.data
 }
 
-const icnsConvertFromBuffers = async (buffers: Buffer[]): Promise<Buffer> => {
+const convertFromBuffers = async (buffers: Buffer[]): Promise<Buffer> => {
   const icns = new Icns()
   const sizes: number[] = []
   for (const buffer of buffers) {
@@ -52,11 +52,9 @@ const icnsConvertFromBuffers = async (buffers: Buffer[]): Promise<Buffer> => {
 
   const missingSizes = Icns.supportedIconTypes
     .map((type) => type.size)
-    .filter((size: number) => !sizes.includes(size))
+    .filter((size) => !sizes.includes(size))
   if (missingSizes.length) {
-    const pixels = missingSizes
-      .map((size: number) => `${size}x${size}`)
-      .join(', ')
+    const pixels = missingSizes.map((size) => `${size}x${size}`).join(', ')
     console.warn(`Warning: Missing pixels (${pixels})`)
   }
 
@@ -65,9 +63,9 @@ const icnsConvertFromBuffers = async (buffers: Buffer[]): Promise<Buffer> => {
 
 export const convert = async (buffer: Buffer | Buffer[]): Promise<Buffer> => {
   if (Buffer.isBuffer(buffer)) {
-    return icnsConvertFromBuffer(buffer)
+    return convertFromBuffer(buffer)
   } else if (Array.isArray(buffer)) {
-    return icnsConvertFromBuffers(buffer)
+    return convertFromBuffers(buffer)
   } else {
     throw new TypeError('Image must be Buffer or Buffer Array')
   }
