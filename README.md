@@ -14,15 +14,15 @@ npm install @fiahfy/icns-convert
 
 ```js
 import fs from 'fs'
-import icnsConvert from '@fiahfy/icns-convert'
+import { convert } from '@fiahfy/icns-convert'
 
 const buf = fs.readFileSync('input.png') // image must be squre, 1024x1024 pixels or larger
-icnsConvert(buf).then((data) => {
+convert(buf).then((data) => {
   fs.writeFileSync('output.icns', data)
 })
 ```
 
-### Specify images by size
+### Specify image for each size
 
 ```js
 const bufs = [
@@ -34,7 +34,7 @@ const bufs = [
   fs.readFileSync('512x512.png'),
   fs.readFileSync('1024x1024.png')
 ]
-icnsConvert(bufs).then((data) => {
+convert(bufs).then((data) => {
   fs.writeFileSync('output.icns', data)
 })
 ```
@@ -46,7 +46,7 @@ npm install -g @fiahfy/icns-convert
 icns-convert icon.png
 ```
 
-### npx
+or use via npx
 
 ```bash
 npx @fiahfy/icns-convert icon.png

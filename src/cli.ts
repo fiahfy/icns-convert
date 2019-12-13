@@ -1,30 +1,51 @@
 import fs from 'fs'
 import path from 'path'
-import program from 'commander'
-import pkg from '../package.json'
-import icnsConvert from '.'
+import meow from 'meow'
+import { convert } from '.'
 
 const main = async (): Promise<void> => {
-  program
-    .version(pkg.version)
-    .description(pkg.description)
-    .usage('[options] source [target]')
-    .on('--help', () => {
-      console.log(`
-Examples:
+  const cli = meow(
+    `
+	Usage: icns-convert [options] <source> [target]
 
-  $ icns-convert icon.png
-  $ icns-convert icons/
-`)
-    })
-    .parse(process.argv)
+	Options:
+    -v, --version  output the version number
+    -h, --help     output usage information
 
-  const source = program.args[0]
-  let target = program.args[1]
+	Examples:
+    $ icns-convert icon.png
+    $ icns-convert icon.png icon.icns
+    $ icns-convert icons/
+    $ icns-convert icons/ icon.icns
+`,
+    {
+      flags: {
+        help: {
+          type: 'boolean',
+          alias: 'h'
+        },
+        version: {
+          type: 'boolean',
+          alias: 'v'
+        }
+      }
+    }
+  )
+
+  if (cli.flags.version) {
+    return cli.showVersion()
+  }
+  if (cli.flags.help) {
+    return cli.showHelp()
+  }
+
+  const source = cli.input[0]
+  let target = cli.input[1]
 
   if (!source) {
-    program.help()
+    return cli.showHelp()
   }
+
   if (!target) {
     const parsed = path.parse(source)
     delete parsed.base
@@ -33,16 +54,18 @@ Examples:
   }
 
   const stat = fs.statSync(source)
-  let arg
+  let buf
   if (stat.isDirectory()) {
-    arg = fs.readdirSync(source).map((filename) => {
+    buf = fs.readdirSync(source).map((filename) => {
       return fs.readFileSync(path.join(source, filename))
     })
   } else {
-    arg = fs.readFileSync(source)
+    buf = fs.readFileSync(source)
   }
-  const result = await icnsConvert(arg)
-  fs.writeFileSync(target, result)
+
+  const data = await convert(buf)
+  fs.writeFileSync(target, data)
+
   console.log(`Output ${path.resolve(target)}`)
 }
 

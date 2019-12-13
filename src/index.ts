@@ -63,7 +63,7 @@ const icnsConvertFromBuffers = async (buffers: Buffer[]): Promise<Buffer> => {
   return icns.data
 }
 
-export default async (buffer: Buffer | Buffer[]): Promise<Buffer> => {
+export const convert = async (buffer: Buffer | Buffer[]): Promise<Buffer> => {
   if (Buffer.isBuffer(buffer)) {
     return icnsConvertFromBuffer(buffer)
   } else if (Array.isArray(buffer)) {

@@ -1,6 +1,6 @@
 {
   "name": "@fiahfy/icns-convert",
-  "description": "Convert PNG to Apple Icon Image format",
+  "description": "Convert Image to Apple Icon Image format",
   "version": "0.0.6",
   "author": {
     "name": "fiahfy",
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@fiahfy/icns": "^0.0.6",
-    "commander": "^4.0.1",
+    "meow": "^6.0.0",
     "sharp": "^0.23.4"
   },
   "devDependencies": {
